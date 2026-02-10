@@ -3,6 +3,7 @@
 	import Comparison from '$lib/components/Comparison.svelte';
 	import Features from '$lib/components/Features.svelte';
 	import TeamFeatures from '$lib/components/TeamFeatures.svelte';
+	import GetStarted from '$lib/components/GetStarted.svelte';
 	import Pricing from '$lib/components/Pricing.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 </script>
@@ -11,5 +12,6 @@
 <Comparison />
 <Features />
 <TeamFeatures />
+<GetStarted />
 <Pricing />
 <Footer />

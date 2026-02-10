@@ -69,7 +69,7 @@
 			{#each features as feature}
 				<div data-feature>
 					<feature.icon size={18} class="text-primary mb-2" />
-					<h3 class="text-sm text-surface mb-1">{feature.title}</h3>
+					<h3 class="text-sm text-surface font-medium mb-1">{feature.title}</h3>
 					<p class="max-w-[30ch] text-xs text-muted leading-relaxed">{feature.description}</p>
 				</div>
 			{/each}
