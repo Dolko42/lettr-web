@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+
+@theme {
+	--color-background: #F7F1F3;
+	--color-primary: #EC104B;
+	--color-surface: #111827;
+	--color-muted: #6B7280;
+	--color-border: #D1D5DB;
+
+	--font-heading: 'Zalando Sans SemiExpanded', sans-serif;
+	--font-body: 'Manrope', sans-serif;
+	--font-code: 'DM Mono', monospace;
+
+	--text-h1: 2.25rem;
+	--text-h1--line-height: 1.2;
+	--text-h2: 1.75rem;
+	--text-h2--line-height: 1.3;
+	--text-h3: 1.25rem;
+	--text-h3--line-height: 1.4;
+	--text-body: 1rem;
+	--text-body--line-height: 1.6;
+	--text-sm: 0.875rem;
+	--text-sm--line-height: 1.5;
+	--text-xs: 0.75rem;
+	--text-xs--line-height: 1.4;
+}
+
+@layer base {
+	*,
+	*::before,
+	*::after {
+		border-radius: 0;
+	}
+
+	html {
+		scroll-behavior: smooth;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	body {
+		font-family: var(--font-body);
+		font-size: var(--text-body);
+		line-height: var(--text-body--line-height);
+		color: var(--color-surface);
+		background-color: var(--color-background);
+	}
+
+	h1 {
+		font-family: var(--font-heading);
+		font-size: var(--text-h1);
+		line-height: var(--text-h1--line-height);
+		font-weight: 400;
+		letter-spacing: -0.02em;
+	}
+
+	h2 {
+		font-family: var(--font-heading);
+		font-size: var(--text-h2);
+		line-height: var(--text-h2--line-height);
+		font-weight: 400;
+		letter-spacing: -0.01em;
+	}
+
+	h3 {
+		font-family: var(--font-heading);
+		font-size: var(--text-h3);
+		line-height: var(--text-h3--line-height);
+		font-weight: 400;
+	}
+
+	code,
+	pre {
+		font-family: var(--font-code);
+	}
+}
+
+@utility glass {
+	backdrop-filter: blur(12px);
+	background-color: rgba(255, 255, 255, 0.2);
+}
