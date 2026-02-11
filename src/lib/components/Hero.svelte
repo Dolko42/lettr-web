@@ -37,7 +37,7 @@
 
 				<div data-animate class="flex flex-wrap items-center mb-3 gap-2">
 					<Button variant="primary" href="#signup">Register</Button>
-					<Button variant="secondary" href="#pricing">See the editor </Button>
+					<Button variant="secondary" href="#pricing">Book a demo </Button>
 				</div>
 				<p data-animate class="max-w-md text-sm text-gray-400">
 					3,000 emails/month free. No credit card required.
