@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import gsap from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-	import { BookOpenIcon, CaretDownIcon } from 'phosphor-svelte';
+	import { ArrowSquareOutIcon } from 'phosphor-svelte';
 	import CodeSnippet from './CodeSnippet.svelte';
 	import TerminalCommand from './TerminalCommand.svelte';
 	import type { CodeTab } from '$lib/utils/shiki';
@@ -10,8 +10,6 @@
 	gsap.registerPlugin(ScrollTrigger);
 
 	let section: HTMLElement | undefined = $state();
-	let dropdownEl: HTMLElement | undefined = $state();
-	let dropdownOpen: boolean = $state(false);
 
 	type Framework = 'laravel' | 'nodejs';
 	let activeFramework: Framework = $state('laravel');
@@ -50,7 +48,9 @@
 			laravel: ['php artisan lettr:init'],
 			nodejs: `import { Lettr } from '@lettr/node';
 
-const lettr = new Lettr(process.env.LETTR_API_KEY);`
+const lettr = new Lettr(process.env.LETTR_API_KEY);`,
+			nodejsLang: 'javascript',
+			nodejsFilename: 'src/lettr.js'
 		},
 		{
 			number: 3,
@@ -107,21 +107,8 @@ console.log(response.requestId);`,
 		return [{ label: activeLabel, lang: getLang(step), code }];
 	}
 
-	function selectFramework(fw: Framework) {
-		activeFramework = fw;
-		dropdownOpen = false;
-	}
-
-	function handleClickOutside(e: MouseEvent) {
-		if (dropdownEl && !dropdownEl.contains(e.target as Node)) {
-			dropdownOpen = false;
-		}
-	}
-
 	onMount(() => {
 		if (!section) return;
-
-		document.addEventListener('click', handleClickOutside);
 
 		gsap.from(section.querySelectorAll('[data-step]'), {
 			scrollTrigger: {
@@ -136,76 +123,62 @@ console.log(response.requestId);`,
 			ease: 'power3.out'
 		});
 
-		return () => document.removeEventListener('click', handleClickOutside);
 	});
 </script>
 
 <section bind:this={section} class="px-4 py-16 border-b border-border/30">
 	<div class="mx-auto max-w-[550px]">
-		<div class="mb-12 flex items-center justify-between gap-4" data-step>
-			<div>
-				<h2 class="mb-3 text-surface">Get started <span class="text-primary">in minutes</span></h2>
-				<p class="text-body text-muted">
-					Four steps to sending your first email. <br /> No complicated setup.
-				</p>
-			</div>
-
-			<div class="relative shrink-0" bind:this={dropdownEl}>
-				<button
-					class="flex items-center gap-1.5 border border-border/30 bg-white px-3 py-1.5 text-sm font-medium text-surface transition-colors hover:bg-background"
-					onclick={() => (dropdownOpen = !dropdownOpen)}
-				>
-					{activeLabel}
-					<CaretDownIcon size={10} />
-				</button>
-				{#if dropdownOpen}
-					<div class="absolute right-0 top-full z-50 mt-1 min-w-[140px] border border-border/30 bg-white py-1 shadow-lg">
-						{#each frameworks as fw}
-							<button
-								class="block w-full px-3 py-1.5 text-left text-[13px] transition-colors {activeFramework === fw.value
-									? 'text-primary font-medium'
-									: 'text-muted hover:text-surface'}"
-								onclick={() => selectFramework(fw.value)}
-							>
-								{fw.label}
-							</button>
-						{/each}
-					</div>
-				{/if}
-			</div>
+		<div class="mb-12" data-step>
+			<h2 class="mb-3 text-surface">Get started <span class="text-primary">in minutes</span></h2>
+			<p class="text-body text-muted">
+				Four steps to sending your first email. <br /> No complicated setup.
+			</p>
 		</div>
 
-		<div class="flex flex-col gap-10">
-			{#each steps as step}
-				<div data-step>
-					<h3 class="mb-3 text-surface">
-						<span class="text-primary">{step.number}.</span> {step.title}
-					</h3>
+		<div class="mb-10 flex w-full border-b border-border/30" data-step>
+			{#each frameworks as fw}
+				<button
+					class="flex-1 py-2.5 text-center text-sm font-medium transition-colors border-b-2 {activeFramework === fw.value
+						? 'border-primary text-primary'
+						: 'border-transparent text-muted hover:text-surface'}"
+					onclick={() => (activeFramework = fw.value)}
+				>
+					{fw.label}
+				</button>
+			{/each}
+			<a
+				href="https://docs.lettr.com/introduction"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="flex flex-1 items-center justify-center gap-1.5 border-b-2 border-transparent py-2.5 text-center text-sm font-medium text-muted transition-colors hover:text-surface"
+			>
+				Docs for more
+				<ArrowSquareOutIcon size={14} />
+			</a>
+		</div>
 
-					{#if step.type === 'terminal'}
-						{@const content = getContent(step)}
-						{#if Array.isArray(content)}
-							<TerminalCommand commands={content} />
+		{#key activeFramework}
+			<div class="flex flex-col gap-10">
+				{#each steps as step}
+					<div data-step>
+						<h3 class="mb-3 text-surface">
+							<span class="text-primary">{step.number}.</span> {step.title}
+						</h3>
+
+						{#if step.type === 'terminal'}
+							{@const content = getContent(step)}
+							{#if Array.isArray(content)}
+								<TerminalCommand commands={content} />
+							{:else}
+								<CodeSnippet tabs={getCodeTab(step)} primaryTabIndices={[0]} moreTabIndices={[]} shadow={false} filename={getFilename(step)} />
+							{/if}
 						{:else}
 							<CodeSnippet tabs={getCodeTab(step)} primaryTabIndices={[0]} moreTabIndices={[]} shadow={false} filename={getFilename(step)} />
 						{/if}
-					{:else}
-						<CodeSnippet tabs={getCodeTab(step)} primaryTabIndices={[0]} moreTabIndices={[]} shadow={false} filename={getFilename(step)} />
-					{/if}
-				</div>
-			{/each}
-		</div>
+					</div>
+				{/each}
+			</div>
+		{/key}
 
-		<div class="mt-10" data-step>
-			<a
-				href="https://docs.lettr.com/introduction"
-				class="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-surface hover:underline"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				<BookOpenIcon size={16} class="text-primary" />
-				View setup guides for Python, Go, Ruby, and more
-			</a>
-		</div>
 	</div>
 </section>

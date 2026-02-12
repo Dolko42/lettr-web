@@ -74,9 +74,10 @@
 	code,
 	pre {
 		font-family: var(--font-code);
-		font-weight: 300;
+		font-weight: 400;
 	}
 }
+
 
 @utility glass {
 	backdrop-filter: blur(8px);

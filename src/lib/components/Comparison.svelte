@@ -12,17 +12,18 @@
 	let activeTab: 'developer' | 'team' = $state('developer');
 	let highlightedCode: string = $state('');
 
-	const code = `import { Lettr } from '@lettr/node';
+	const code = `use Illuminate\Support\Facades\Mail;
 
-await Lettr.send('welcome-email', {
-    to: user.email,
-    data: { name: user.name }
-});`;
+Mail::lettr()
+    ->to($user->email)
+    ->sendTemplate('welcome-email', [
+        'name' => $user->name,
+    ]);`;
 
 	async function highlightCode() {
 		const highlighter = await getHighlighter();
 		highlightedCode = highlighter.codeToHtml(code, {
-			lang: 'javascript',
+			lang: 'php',
 			theme: 'lettr'
 		});
 	}
@@ -115,7 +116,7 @@ await Lettr.send('welcome-email', {
 					<div class="absolute inset-0 p-[6px]">
 						<div class="bg-gray-800 border-t border-gray-700 h-full p-4 pb-8">
 							<div class="font-code [&_pre]:!bg-transparent [&_pre]:!p-0 [&_pre]:!leading-[1.4] [&_code]:!text-[13px] [&_code]:!leading-[1.4]" data-animate-in>
-								<p class="text-xs text-gray-500 mb-6">example.js</p>
+								<p class="text-xs text-gray-500 mb-6">example/WelcomeMail.php</p>
 								{@html highlightedCode}
 							</div>
 						</div>

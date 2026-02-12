@@ -30,7 +30,7 @@
 		'inline-flex items-center justify-center min-w-[180px] px-6 py-3 font-bold transition-colors cursor-pointer';
 	const variants = {
 		primary: 'bg-primary text-white hover:bg-primary/90',
-		secondary: 'text-primary bg-white hover:bg-primary/5'
+		secondary: 'text-primary bg-white hover:bg-primary/10'
 	};
 </script>
 

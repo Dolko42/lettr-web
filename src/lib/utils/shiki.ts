@@ -10,19 +10,19 @@ const lettrTheme: ThemeRegistration = {
 	settings: [
 		{
 			scope: [],
-			settings: { foreground: '#e0e0e0' }
+			settings: { foreground: '#f0f0f0' }
 		},
 		{
 			scope: ['comment', 'punctuation.definition.comment'],
-			settings: { foreground: '#555555' }
+			settings: { foreground: '#6b7280' }
 		},
 		{
 			scope: ['string', 'string.quoted'],
-			settings: { foreground: '#f2728a' }
+			settings: { foreground: '#f9a8b8' }
 		},
 		{
 			scope: ['keyword', 'storage.type', 'storage.modifier'],
-			settings: { foreground: '#EC104B' }
+			settings: { foreground: '#f43f6b' }
 		},
 		{
 			scope: ['entity.name.function', 'support.function'],
@@ -30,35 +30,35 @@ const lettrTheme: ThemeRegistration = {
 		},
 		{
 			scope: ['variable', 'variable.other', 'variable.parameter'],
-			settings: { foreground: '#d4d4d4' }
+			settings: { foreground: '#e8e8e8' }
 		},
 		{
 			scope: ['constant', 'constant.numeric', 'constant.language'],
-			settings: { foreground: '#f4a0b3' }
+			settings: { foreground: '#f9c4d0' }
 		},
 		{
 			scope: ['entity.name.type', 'entity.name.class', 'support.class'],
-			settings: { foreground: '#f2728a' }
+			settings: { foreground: '#f9a8b8' }
 		},
 		{
 			scope: ['punctuation', 'meta.brace'],
-			settings: { foreground: '#888888' }
+			settings: { foreground: '#a1a1aa' }
 		},
 		{
 			scope: ['entity.name.tag'],
-			settings: { foreground: '#EC104B' }
+			settings: { foreground: '#f43f6b' }
 		},
 		{
 			scope: ['entity.other.attribute-name'],
-			settings: { foreground: '#f4a0b3' }
+			settings: { foreground: '#f9c4d0' }
 		},
 		{
 			scope: ['support.type.property-name', 'meta.object-literal.key'],
-			settings: { foreground: '#d4d4d4' }
+			settings: { foreground: '#e8e8e8' }
 		},
 		{
 			scope: ['keyword.operator', 'keyword.operator.assignment'],
-			settings: { foreground: '#888888' }
+			settings: { foreground: '#a1a1aa' }
 		}
 	]
 };
@@ -97,22 +97,15 @@ Mail::lettr()
 	{
 		label: 'PHP',
 		lang: 'php',
-		code: `$ch = curl_init('https://api.lettr.dev/v1/send');
+		code: `use Lettr\\Lettr;
 
-curl_setopt_array($ch, [
-    CURLOPT_POST       => true,
-    CURLOPT_HTTPHEADER => [
-        'Authorization: Bearer ' . $apiKey,
-        'Content-Type: application/json',
-    ],
-    CURLOPT_POSTFIELDS => json_encode([
-        'from'    => 'hello@yourapp.com',
-        'to'      => 'user@example.com',
-        'subject' => 'Welcome to Lettr',
-    ]),
-]);
+$lettr = new Lettr(getenv('LETTR_API_KEY'));
 
-$response = curl_exec($ch);`
+$lettr->sendTemplate('welcome-email', [
+    'to' => 'user@example.com',
+    'name' => 'John',
+    'company' => 'Acme Inc',
+]);`
 	},
 	{
 		label: 'Node.js',
@@ -121,11 +114,10 @@ $response = curl_exec($ch);`
 
 const lettr = new Lettr(process.env.LETTR_API_KEY);
 
-await lettr.emails.send({
-  from: 'hello@yourapp.com',
+await lettr.sendTemplate('welcome-email', {
   to: 'user@example.com',
-  subject: 'Welcome to Lettr',
-  html: '<h1>Hello!</h1>',
+  name: 'John',
+  company: 'Acme Inc',
 });`
 	},
 	{
@@ -135,12 +127,11 @@ await lettr.emails.send({
 
 client = lettr.Client(api_key="your_api_key")
 
-client.emails.send(
-    from_email="hello@yourapp.com",
-    to="user@example.com",
-    subject="Welcome to Lettr",
-    html="<h1>Hello!</h1>",
-)`
+client.send_template("welcome-email", {
+    "to": "user@example.com",
+    "name": "John",
+    "company": "Acme Inc",
+})`
 	},
 	{
 		label: 'Go',
@@ -152,11 +143,10 @@ import "github.com/lettr/lettr-go"
 func main() {
     client := lettr.NewClient("your_api_key")
 
-    client.Emails.Send(&lettr.SendParams{
-        From:    "hello@yourapp.com",
+    client.SendTemplate("welcome-email", &lettr.Params{
         To:      "user@example.com",
-        Subject: "Welcome to Lettr",
-        HTML:    "<h1>Hello!</h1>",
+        Name:    "John",
+        Company: "Acme Inc",
     })
 }`
 	},
@@ -167,11 +157,10 @@ func main() {
 
 client = Lettr::Client.new(api_key: 'your_api_key')
 
-client.emails.send(
-  from: 'hello@yourapp.com',
+client.send_template('welcome-email',
   to: 'user@example.com',
-  subject: 'Welcome to Lettr',
-  html: '<h1>Hello!</h1>'
+  name: 'John',
+  company: 'Acme Inc'
 )`
 	},
 	{
@@ -181,10 +170,10 @@ client.emails.send(
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
-    "from": "hello@yourapp.com",
+    "template": "welcome-email",
     "to": "user@example.com",
-    "subject": "Welcome to Lettr",
-    "html": "<h1>Hello!</h1>"
+    "name": "John",
+    "company": "Acme Inc"
   }'`
 	}
 ];

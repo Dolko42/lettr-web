@@ -35,11 +35,11 @@
 					GitHub
 				</a>
 				<a
-					href="mailto:hello@lettr.dev"
+					href="mailto:support@lettr.com"
 					class="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-surface"
 				>
 					<EnvelopeSimpleIcon size={14} class="text-primary" />
-					Contact
+					support@lettr.com
 				</a>
 			</div>
 		</div>
@@ -49,7 +49,7 @@
 				<h3 class="text-surface">Ready to get started?</h3>
 				<p class="text-sm text-muted">Start sending emails in under 5 minutes. No credit card required.</p>
 				<a
-					href="#signup"
+					href="https://app.lettr.com/register"
 					class="bg-primary px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
 				>
 					Create free account

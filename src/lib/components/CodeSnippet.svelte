@@ -32,10 +32,16 @@
 
 	async function highlight(tab: CodeTab) {
 		const highlighter = await getHighlighter();
-		highlightedCode = highlighter.codeToHtml(tab.code, {
+		const isPhp = tab.lang === 'php' && !tab.code.trimStart().startsWith('<?');
+		const code = isPhp ? `<?php\n${tab.code}` : tab.code;
+		let html = highlighter.codeToHtml(code, {
 			lang: tab.lang,
 			theme: 'lettr'
 		});
+		if (isPhp) {
+			html = html.replace(/(<code[^>]*>).*?\n/, '$1');
+		}
+		highlightedCode = html;
 	}
 
 	function selectTab(index: number) {
@@ -142,7 +148,7 @@
 		>
 			{#if copied}
 				<CheckIcon size={14} />
-				Copy code
+				Copied
 			{:else}
 				<CopyIcon size={14} />
 				Copy code
@@ -151,7 +157,7 @@
 	</div>
 
 	<div class="overflow-x-auto border-t border-gray-700 p-4 pb-8 bg-gray-800">
-		<div bind:this={codeEl} class="font-code [&_pre]:!bg-transparent [&_pre]:!p-0 [&_pre]:!leading-[1.3] [&_code]:!text-[13px] [&_code]:!leading-[1.3]">
+		<div bind:this={codeEl} class="font-code [&_pre]:!bg-transparent [&_pre]:!p-0 [&_pre]:!leading-[1.5] [&_code]:!text-[13px] [&_code]:!leading-[1.5]">
 			{@html highlightedCode}
 		</div>
 	</div>

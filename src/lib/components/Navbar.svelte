@@ -26,7 +26,7 @@
 
 	const rightLinks = [
 		{ label: 'Docs', href: 'https://docs.lettr.com/introduction' },
-		{ label: 'Sign Up', href: '#signup', primary: true }
+		{ label: 'Sign Up', href: 'https://app.lettr.com/register', primary: true }
 	];
 </script>
 
@@ -46,12 +46,17 @@
 				<img src="/logo.svg" alt="Lettr" class="h-5" />
 			</a>
 
-			<div class="hidden flex-1 items-center justify-center gap-6 md:flex">
-				{#each navLinks as link}
-					<a href={link.href} class="text-sm text-muted transition-colors hover:text-surface">
-						{link.label}
+			<div class="hidden flex-1 items-center justify-center gap-4 pr-3 md:flex">
+				<div class="flex items-center justify-center w-[60px]">
+					<a href="#features" class="text-sm text-muted transition-colors hover:text-surface">
+						Features
 					</a>
-				{/each}
+				</div>
+				<div class="flex items-center justify-center w-[60px]">
+					<a href="#pricing" class="text-sm text-muted transition-colors hover:text-surface">
+						Pricing
+					</a>
+				</div>
 			</div>
 
 			<div class="hidden w-[120px] items-center justify-end gap-6 md:flex">

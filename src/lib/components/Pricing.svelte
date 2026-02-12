@@ -205,7 +205,7 @@
 				</ul>
 
 				<a
-					href="#signup"
+					href="https://app.lettr.com/register"
 					class="flex items-center justify-center py-3 text-sm font-semibold bg-primary text-white transition-colors hover:bg-primary/90"
 				>
 					{activePlan.cta}

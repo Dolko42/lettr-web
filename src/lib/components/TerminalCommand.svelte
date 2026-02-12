@@ -18,20 +18,20 @@
 	}
 </script>
 
-<div class="w-full border border-border/30 bg-white">
-	<div class="flex items-center justify-between px-3 py-1.5">
-		<div class="flex items-center gap-1.5 text-[12px] text-muted">
+<div class="w-full px-[6px] pb-[6px] pt-[2px] border border-border/30 bg-white">
+	<div class="flex items-center justify-between py-2">
+		<div class="flex items-center gap-1.5 pl-3 text-[12px] text-muted">
 			<TerminalWindowIcon size={14} />
 			Terminal
 		</div>
 		<button
-			class="flex shrink-0 items-center gap-1.5 p-1.5 text-muted transition-colors hover:text-surface text-[12px]"
+			class="flex shrink-0 items-center gap-1.5 pr-1.5 text-muted transition-colors hover:text-surface text-[12px]"
 			onclick={copyCommands}
 			aria-label="Copy command"
 		>
 			{#if copied}
 				<CheckIcon size={14} />
-				Copy code
+				Copied
 			{:else}
 				<CopyIcon size={14} />
 				Copy code
@@ -39,7 +39,7 @@
 		</button>
 	</div>
 
-	<div class="border-t border-border/30 bg-background px-4 py-3">
+	<div class="border-t border-gray-200 bg-gray-50 p-4">
 		{#each commands as command}
 			<div class="flex items-center gap-2 font-code text-[13px] leading-[1.6]">
 				<span class="select-none text-primary">$</span>
